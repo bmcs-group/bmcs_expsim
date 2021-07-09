@@ -137,3 +137,8 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+/notebooks/bond3d/cow.vtp
+/notebooks/bond3d/CylinderQuadratic.vtk
+/notebooks/bond3d/output.html
+/notebooks/bond3d/pullout_axisim_el.ipynb
+/notebooks/bond3d/smaller_output.html
