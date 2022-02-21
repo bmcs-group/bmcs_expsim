@@ -34,14 +34,14 @@ P = 1.
 
 xd_lower = XDomainFEGrid(integ_factor = P,
                          coord_min=(0, 0),
-                          coord_max=(L_x, R_in),
-                          shape=(n_y_e, n_inner_x_e),
-                          fets=FETS2D4Q())
+                         coord_max=(L_x, R_in),
+                         shape=(n_y_e, n_inner_x_e),
+                         fets=FETS2D4Q())
 xd_upper = XDomainFEGrid(integ_factor = P,
                          coord_min=(0, R_in),
-                          coord_max=(L_x, R_out),
-                          shape=(n_y_e, n_outer_x_e),
-                          fets=FETS2D4Q())
+                         coord_max=(L_x, R_out),
+                         shape=(n_y_e, n_outer_x_e),
+                         fets=FETS2D4Q())
 m1 = MATS2DElastic(E=37000, nu=0.18)
 m2 = MATS2DElastic(E=37000, nu=0.18)
 
