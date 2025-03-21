@@ -26,36 +26,6 @@ def parse_function_id(line):
         return int(match.group(1)) 
     return None
 
-def format_function_block(func_id, time_value_pairs): 
-    """ Given a function ID and a list of (time, value) points, construct 
-    the lines that typically define such a function in the ATENA input file.
-    
-    This format may need to be adapted depending on how your input file is structured.
-    Below is just a simple example where we list each pair as:
-
-    XVALUES ...
-    YVALUES ...
-
-    or possibly in a single table. Adjust as needed.
-    """
-    lines = []
-    lines.append(f"FUNCTION ID = {func_id}")
-
-    # Example approach: we store as separate XVALUES, YVALUES
-    # Suppose the file format demands a line with the number of points
-    lines.append(f" NUM_POINTS = {len(time_value_pairs)}")
-
-    # X-values in one line
-    x_vals = " ".join(str(point[0]) for point in time_value_pairs)
-    lines.append(f" XVALUES = {x_vals}")
-
-    # Y-values in another line
-    y_vals = " ".join(str(point[1]) for point in time_value_pairs)
-    lines.append(f" YVALUES = {y_vals}")
-
-    lines.append("END FUNCTION")
-    return lines
-
 def inject_time_functions(input_file, output_file, time_functions): 
     """ Read the input file line by line, identify FUNCTION ID blocks, 
     and replace them with new ones from 'time_functions' if available. 
@@ -91,8 +61,10 @@ def inject_time_functions(input_file, output_file, time_functions):
                 if current_function_id in time_functions:
                     print(f"Injecting new data for FUNCTION ID {current_function_id}")
                     # Write the new xvalues and yvalues lines
-                    new_xvalues = "        xvalues " + " ".join(str(point[0]) for point in time_functions[current_function_id])
-                    new_yvalues = "        xvalues " + " ".join(str(point[1]) for point in time_functions[current_function_id])
+                    x_values, y_values = time_functions[current_function_id]
+                    # ATENA creep does not accept zero values for time - setting time is the start time - at least 0.01
+                    new_xvalues = "        xvalues " + " ".join(str(val) for val in x_values[1:])
+                    new_yvalues = "        yvalues " + " ".join(str(val) for val in y_values[1:])
                     f_out.write(new_xvalues + "\n")
                     f_out.write(new_yvalues + "\n")
                     
@@ -105,4 +77,35 @@ def inject_time_functions(input_file, output_file, time_functions):
             else:
                 # Not a FUNCTION ID line, just write it normally
                 f_out.write(line)
+
+
+def generate_input_section(stop_time, num_steps, load_case_id):
+    step_template = """
+STEP ID {step_id} Type CREEP NAME "Load ... BC#1" AT    {time_value:.5f}
+Load CASE
+          FIXED
+               1 *     0.00100
+
+          INCREMENT
+      {load_case_id} * 1.0000000e-03
+ ;
+"""
+    interval_template = """
+MAX_COORDS_TOL 2.0000000e-01
+                                                                                 
+SET STOP_TIME    {stop_time:.5f} // Redefinition of Stop Time by start of Next step definition
+
+/* Total of steps in Interval# 1: {num_steps} */
+"""
+    
+    interval_section = interval_template.format(stop_time=stop_time, num_steps=num_steps)
+    
+    steps_section = ""
+    time_increment = stop_time / num_steps
+    
+    for step_id in range(1, num_steps + 1):
+        time_value = step_id * time_increment
+        steps_section += step_template.format(step_id=step_id, time_value=time_value, load_case_id=load_case_id)
+    
+    return interval_section + steps_section
 

@@ -49,7 +49,7 @@ UNITS // using in GiD and Atena
   force        "MN"
   length       "m"
   temperature  "C"
-  time         "day"
+  time         "hour"
   mass         "kton"
 
 

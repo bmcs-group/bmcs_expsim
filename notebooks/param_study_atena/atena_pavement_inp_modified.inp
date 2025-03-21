@@ -49,7 +49,7 @@ UNITS // using in GiD and Atena
   force        "MN"
   length       "m"
   temperature  "C"
-  time         "day"
+  time         "hour"
   mass         "kton"
 
 
@@ -62,28 +62,28 @@ SET SAMPLE_TIMES_PER_DECADE 4
 FUNCTION ID 10251
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable E"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues        1.000000e+00        7.000000e+00 
-        yvalues    2.0000e+04    3.0000e+04 
+        xvalues 1.0 2 3 7.0
+        yvalues 20000.0 25000.0 28000.0 30000.0
 FUNCTION ID 10252
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable FT"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues    1.0000e+00    7.0000e+00 
-        yvalues    1.7000e+00    2.3000e+00 
+        xvalues 1.0 2 3 7.0
+        yvalues 1.7 2 2.2 2.3
 FUNCTION ID 10253
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable FC"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues    1.0000e+00    7.0000e+00 
-        yvalues    -1.6000e+01    -2.9000e+01 
+        xvalues 1.0 7.0
+        yvalues -16.0 -29.0
 FUNCTION ID 10254
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable GF"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues    1.0000e+00    7.0000e+00 
-        yvalues    9.8500e-05    1.2800e-04 
+        xvalues 1.0 7.0
+        yvalues 9.85e-05 0.000128
 FUNCTION ID 10255
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable Fc0"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues    1.0000e+00    7.0000e+00 
-        yvalues    -4.0000e+00    -5.0000e+00 
+        xvalues 1.0 7.0
+        yvalues -4.0 -5.0
 
 MATERIAL ID 1
   NAME "volume#1#1"
@@ -110,28 +110,28 @@ GEOMETRY ID 1
 FUNCTION ID 20251
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable E"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues 0.0 1.0 2.0 3.0
-        xvalues 0.0 10.0 20.0 25.0
+        xvalues 1.0 2.0 7.0
+        yvalues 20000.0 0.0 0.0
 FUNCTION ID 20252
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable FT"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues 0.0 1.0 2.0 3.0
-        xvalues 5.0 15.0 30.0 80.0
+        xvalues 1.0 2.0 7.0
+        yvalues 1.7 0.0 0.0
 FUNCTION ID 20253
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable FC"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues 0.0 5.0
-        xvalues 100.0 150.0
+        xvalues 1.0 2.0 7.0
+        yvalues -16.0 0.0 0.0
 FUNCTION ID 20254
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable GF"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues    1.0000e+00    2.0000e+00    7.0000e+00 
-        yvalues    9.8500e-05    0.0000e+00    0.0000e+00 
+        xvalues 1.0 2.0 7.0
+        yvalues 9.85e-05 0.0 0.0
 FUNCTION ID 20255
         NAME "Function for 3D Variable Nonlinear Cementitious 2 Variable Fc0"
         TYPE "CCMultiLinearFunction" REMOVE_ALL 
-        xvalues    1.0000e+00    2.0000e+00    7.0000e+00 
-        yvalues    -4.0000e+00    0.0000e+00    0.0000e+00 
+        xvalues 1.0 2.0 7.0
+        yvalues -4.0 0.0 0.0
 
 MATERIAL ID 2
   NAME "notch#2#2"
